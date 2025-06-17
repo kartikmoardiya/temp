@@ -116,4 +116,21 @@ router.get('/detail/:_id', async (req, res) => {
         return res.send("Error")
     }
 });
+
+router.get('/', async (req, res) => {
+    try {
+        const _id = req.params._id; // Extract current and new passwords from request body
+        // Find the user by userID
+        const user = await User.find();
+
+        if (!user) {
+            return res.send("Error")
+        }
+        return res.json({ user })
+    } catch (err) {
+        console.error(err);
+        res.status(500);
+        return res.send("Error")
+    }
+});
 module.exports = router;
