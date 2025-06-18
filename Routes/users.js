@@ -54,11 +54,11 @@ router.post('/login', async (req, res) => {
 router.put('/update-password', async (req, res) => {
     try {
         const email = req.body.email; // Extract the id from the token
-        const { currentPassword, newPassword } = req.body; // Extract current and new passwords from request body
+        const { name, password} = req.body; // Extract current and new passwords from request body
 
         // Check if currentPassword and newPassword are present in the request body
-        if (!currentPassword || !newPassword) {
-            return res.status(400).json({ error: 'Both currentPassword and newPassword are required' });
+        if (!name|| !password || !email) {
+            return res.status(400).json({ error: 'Data Are required' });
         }
 
         // Find the user by userID
@@ -70,7 +70,10 @@ router.put('/update-password', async (req, res) => {
         }
 
         // Update the user's password
-        user.password = newPassword;
+        user.password = password;
+        user.name = name;
+        user.email = email;
+
         await user.save();
 
         res.status(200);
