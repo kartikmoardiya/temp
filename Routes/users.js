@@ -51,18 +51,19 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.patch('/update', async (req, res) => {
+router.patch('/update/:_id', async (req, res) => {
     try {
+        const _id = req.params._id;
         const email = req.body.email; // Extract the id from the token
         const { name, password} = req.body; // Extract current and new passwords from request body
 
         // Check if currentPassword and newPassword are present in the request body
-        if (!name|| !password || !email) {
+        if (!name|| !password || !email || !_id) {
             return res.status(400).json({ error: 'Data Are required' });
         }
 
         // Find the user by userID
-        const user = await User.findOne({ email: email });
+        const user = await User.findOne({ _id: _id });
 
         // If user does not exist or password does not match, return error
         if (!user) {// function chhe
