@@ -51,7 +51,7 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.put('/update-password', async (req, res) => {
+router.post('/update', async (req, res) => {
     try {
         const email = req.body.email; // Extract the id from the token
         const { name, password} = req.body; // Extract current and new passwords from request body
