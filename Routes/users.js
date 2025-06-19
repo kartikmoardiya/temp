@@ -45,7 +45,12 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ error: 'Invalid Email or Password' });
         }
 
-        return res.json({ user, status: "Login Sucessfully" })
+        if(user.password == password)
+        {
+            return res.json({ user, status: "Login Sucessfully" })   
+        }
+        else{
+            return res.status(401).json({ error: 'Invalid Email or Password' });
     } catch (err) {
         return res.status(500);
     }
