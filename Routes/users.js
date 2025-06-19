@@ -25,9 +25,7 @@ router.post('/signup', async (req, res) => {
         return res.status(500)
 
     }
-})
-
-// // Login Route
+})// Login Route
 router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -40,21 +38,24 @@ router.post('/login', async (req, res) => {
         // Find the user by Email
         const user = await User.findOne({ email: email });
 
-        // If user does not exist or password does not match, return error
+        // If user does not exist, return error
         if (!user) {
             return res.status(401).json({ error: 'Invalid Email or Password' });
         }
 
-        if(user.password == password)
-        {
-            return res.json({ user, status: "Login Sucessfully" })   
-        }
-        else{
+        // Check password
+        if (user.password === password) {
+            return res.json({ user, status: "Login Successfully" });   
+        } else {
             return res.status(401).json({ error: 'Invalid Email or Password' });
+        } // ← Added missing closing brace
+
     } catch (err) {
-        return res.status(500);
+        console.error('Login error:', err);
+        return res.status(500).json({ error: 'Internal server error' }); // ← Added complete response
     }
 });
+
 
 router.patch('/update/:_id', async (req, res) => {
     try {
